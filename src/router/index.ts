@@ -1,11 +1,14 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
+import Layout from '@/components/Layout.vue'
+import discover from './modules/discover'
 
-const routes = [
+const routes: RouteRecordRaw[] = [
   {
     path: '/',
-    component: () => import('@/App.vue'),
-    keepAlive: false,
+    component: Layout,
+    redirect: '/discover',
   },
+  discover
 ]
 
 const router = createRouter({

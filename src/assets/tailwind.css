@@ -1,3 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.sideBar {
+  height: 100vh - 50px;
+}

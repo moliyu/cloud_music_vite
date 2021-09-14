@@ -1,3 +1,10 @@
+const space = {
+  sideBar: 'calc(100vh - 50px)',
+  content: 'calc(100% - 200px)'
+}
+for (let i = 0; i < 400; i++) {
+  space[i + 'px'] = i + 'px'
+}
 module.exports = {
   purge: [
     './index.html',
@@ -5,10 +12,25 @@ module.exports = {
   ],
   darkMode: false, // or 'media' or 'class'
   theme: {
-    extend: {},
+    colors: {
+      primary: '#D23931',
+      sideBar: '#EDEDEE',
+      gray: {
+        DEFAULT: '#E9E9E9',
+        light: '#F9F9F9'
+      }
+    },
+    extend: {
+      width: space,
+      height: space,
+      padding: space,
+      margin: space
+    },
   },
   variants: {
-    extend: {},
+    extend: {
+      fontWeight: ['hover', 'focus']
+    },
   },
   plugins: [],
 }

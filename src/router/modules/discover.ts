@@ -4,6 +4,7 @@ import Layout from '@/components/Layout.vue'
 export default {
   path: '/discover',
   component: Layout,
+  meta: { title: '发现音乐' },
   children: [
     {
       path: '',

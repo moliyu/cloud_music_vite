@@ -3,8 +3,8 @@
     <div
       v-for="(item, i) in navList"
       :key="i"
-      class="ml-30px cursor-pointer hover:text-primary hover:font-medium text-sm"
-      :class="active(item) && 'text-primary font-medium'"
+      class="ml-30px cursor-pointer hover:text-primary hover:font-bold text-sm"
+      :class="active(item) ? 'text-primary font-bold' : 'text-gray-text'"
       @click="go(item.path)"
     >{{ item.meta?.title }}</div>
     <div class="flex-auto"></div>
@@ -19,7 +19,7 @@ const router = useRouter()
 const navList = ref<RouteRecordRaw[]>([])
 const parentPath = ref('')
 const join = (parent: string, path: string) => {
-  return `${parentPath.value}${path ? '/' : ''}${path}`
+  return `${parent}${path ? '/' : ''}${path}`
 }
 const go = (path: string) => {
   router.push(join(parentPath.value, path))

@@ -17,7 +17,11 @@ module.exports = {
       sideBar: '#EDEDEE',
       gray: {
         DEFAULT: '#E9E9E9',
-        light: '#F9F9F9'
+        light: '#F9F9F9',
+        text: '#646464'
+      },
+      black: {
+        DEFAULT: '#333333'
       }
     },
     extend: {

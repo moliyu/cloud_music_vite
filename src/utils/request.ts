@@ -16,12 +16,8 @@ instance.interceptors.response.use(axiosSuccess, axiosError)
 
 export default instance
 
-type CustomResponse<T> = {
-  code: number
-  result: T
-  [K: string]: any
-}
-type Fetch = <T = any>(url: string, params?: any, config?: AxiosRequestConfig) => Promise<CustomResponse<T>>
+export type CustomResponse<T> = T & { code: number }
+export type Fetch = <T = any>(url: string, params?: any, config?: AxiosRequestConfig) => Promise<CustomResponse<T>>
 
 export const get: Fetch = (url, params, config = {}) => {
   return instance.get(url, { params, ...config })

@@ -7,9 +7,8 @@
 
 <script setup lang="ts">
 import { RightOutlined } from '@ant-design/icons-vue' 
-const props = defineProps<{
+defineProps<{
   name: string
   url?: string
 }>()
-console.log('%c 🍰 ctx: ', 'font-size:20px;background-color: #2EAFB0;color:#fff;', props);
 </script>

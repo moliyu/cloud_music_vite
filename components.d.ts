@@ -4,10 +4,12 @@
 
 declare module 'vue' {
   export interface GlobalComponents {
-    AButton: typeof import('ant-design-vue/es')['Button']
     ACol: typeof import('ant-design-vue/es')['Col']
     ARow: typeof import('ant-design-vue/es')['Row']
+    ASpin: typeof import('ant-design-vue/es')['Spin']
+    Banner: typeof import('./src/components/Banner.vue')['default']
     Box: typeof import('./src/components/Box.vue')['default']
+    Error: typeof import('./src/components/Error.vue')['default']
     HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']
     Layout: typeof import('./src/components/Layout.vue')['default']
     LayoutHeader: typeof import('./src/components/Layout/Header.vue')['default']

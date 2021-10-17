@@ -1,7 +1,7 @@
 <template>
-  <a-spin :spinning="!mvList.length">
+  <a-spin :spinning="loading">
     <a-row :gutter="20">
-      <a-col :span="8" v-for="item in mvList" :key="item.id" class="cursor-pointer relative group">
+      <a-col :span="8" v-for="item in res?.result" :key="item.id" class="cursor-pointer relative group">
         <div 
           class="absolute group-hover:opacity-100 opacity-0 p-5px bg-opacity-40 flex items-center text-white left-4 top-2 bg-black z-10 rounded-full">
           <CaretRightOutlined />
@@ -17,14 +17,9 @@
 
 <script setup lang="ts">
 import { mvApi } from '@/api/recommend'
-import { IMv } from '@/api/types/recommend';
 import useImg from '@/hooks/useImg';
-import { ref } from '@vue/reactivity';
 import { CaretRightOutlined } from '@ant-design/icons-vue'
-const mvList = ref<Array<IMv>>([])
-const getMvList = async() => {
-  const res = await mvApi()
-  mvList.value = res.result.slice(0, 3)
-}
-getMvList()
+import useApi from '@/hooks/useApi';
+const { res, request, loading } = useApi(mvApi)
+request()
 </script>

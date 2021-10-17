@@ -1,6 +1,6 @@
 <template>
   <a-spin :spinning="!bannerList.length">
-    <div class="relative cursor-pointer mt-20px" style="padding-top: 21%">
+    <div class="relative cursor-pointer mt-20px" style="padding-top: 21%" @mouseenter="bannerStop()" @mouseleave="bannerStart()">
       <LeftOutlined class="icon left-2" @click="state.activeIndex--" />
       <RightOutlined class="icon right-2" @click="state.activeIndex++" />
       <div class="absolute w-1/2 top-0 left-0" @click="handleClick(i)" :style="generateStyle(i)" v-for="(item, i) in bannerList" :key="i">
@@ -23,10 +23,10 @@
 <script setup lang="ts">
 import { bannerApi, PlatForm } from "@/api/recommend";
 import { IBanner } from "@/api/types/recommend";
-import { computed, reactive } from "@vue/reactivity";
+import { computed, reactive, ref } from "@vue/reactivity";
 import { LeftOutlined, RightOutlined } from '@ant-design/icons-vue'
 import useImg from '@/hooks/useImg'
-import { watchEffect } from "@vue/runtime-core";
+import { onBeforeUnmount, onMounted, watchEffect } from "@vue/runtime-core";
 
 const state = reactive<{bannerList: Array<IBanner>, activeIndex: number, isLeft: boolean, loading: boolean}>({
   bannerList: [],
@@ -34,12 +34,28 @@ const state = reactive<{bannerList: Array<IBanner>, activeIndex: number, isLeft:
   isLeft: false,
   loading: false
 })
+const timer = ref()
 const getBanner = async() => {
   const res = await bannerApi({ type: PlatForm.pc })
   state.bannerList = res.banners
 }
 const bannerList = computed(() => {
   return state.bannerList.length ? [state.bannerList[state.bannerList.length - 1], ...state.bannerList, state.bannerList[0]] : []
+})
+const bannerStart = () => {
+  timer.value = setInterval(() => {
+    state.activeIndex++
+  }, 5000)
+}
+const bannerStop = () => {
+  clearInterval(timer.value)
+  timer.value = null
+}
+onMounted(() => {
+  bannerStart()
+})
+onBeforeUnmount(() => {
+  bannerStop()
 })
 watchEffect(() => {
   if (state.activeIndex > bannerList.value.length - 2) {

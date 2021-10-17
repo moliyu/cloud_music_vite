@@ -53,3 +53,16 @@ export type ICreator = {
 export type IAlbumDetail = {
   playlist: IPlayList
 }
+
+export type IArtist = {
+  id: number
+  name: string
+}
+
+export type IAlbum = {
+  id: number
+  name: string
+  pic: number
+  picUrl: string
+  pic_str: string
+}

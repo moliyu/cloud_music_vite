@@ -1,9 +1,13 @@
 import { ref } from 'vue'
-export default <T>(api: (params?: any) => Promise<any>) => {
+
+type GetParams<T> = T extends (...params: infer P) => Promise<any> ? [...P] : []
+type Res<T> = T extends (...params: any) => Promise<infer P> ? P : Promise<any>
+
+export default <T extends (...params: any) => Promise<any>>(api: T) => {
   const loading = ref(false)
   const error = ref(null)
-  const res = ref<T>()
-  const request = (...args: any[]) => {
+  const res = ref<Res<T>>()
+  const request = (...args: GetParams<T>) => {
     loading.value = true
     api(...args).then(result => {
       res.value = result

@@ -4,9 +4,13 @@
 
 declare module 'vue' {
   export interface GlobalComponents {
+    AButton: typeof import('ant-design-vue/es')['Button']
     ACol: typeof import('ant-design-vue/es')['Col']
     ARow: typeof import('ant-design-vue/es')['Row']
     ASpin: typeof import('ant-design-vue/es')['Spin']
+    ATable: typeof import('ant-design-vue/es')['Table']
+    ATabPane: typeof import('ant-design-vue/es')['TabPane']
+    ATabs: typeof import('ant-design-vue/es')['Tabs']
     Banner: typeof import('./src/components/Banner.vue')['default']
     Box: typeof import('./src/components/Box.vue')['default']
     Error: typeof import('./src/components/Error.vue')['default']
@@ -15,6 +19,7 @@ declare module 'vue' {
     LayoutHeader: typeof import('./src/components/Layout/Header.vue')['default']
     LayoutSideBar: typeof import('./src/components/Layout/SideBar.vue')['default']
     NavTitle: typeof import('./src/components/NavTitle.vue')['default']
+    Player: typeof import('./src/components/Player.vue')['default']
     SvgIcon: typeof import('./src/components/SvgIcon.vue')['default']
   }
 }

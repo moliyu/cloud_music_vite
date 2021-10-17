@@ -1,8 +1,9 @@
-import { InjectionKey } from 'vue'
-import { createStore, Store, useStore as baseUseStore } from 'vuex'
+import { createStore, useStore as baseUseStore } from 'vuex'
 import test from './modules/test'
 import app from './modules/app'
-import { moduleAction, UseStore } from '@/hooks/useStore'
+import player from './modules/player'
+import getters from './getters'
+import { UseStore } from '@/hooks/useStore'
 
 const state = {
     count: 1
@@ -11,8 +12,8 @@ const state = {
 type RootState = typeof state
 
 export const vuexOptions = {
-    state: state,
-    getter: {},
+    state,
+    getters,
     mutations: {
         ADD: (state: RootState, count: number) => {
             state.count = count
@@ -24,7 +25,8 @@ export const vuexOptions = {
     actions: {},
     modules: {
         app,
-        test
+        test,
+        player
     }
 }
 

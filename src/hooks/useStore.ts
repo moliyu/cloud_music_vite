@@ -38,15 +38,22 @@ type SubActions = union<GetSubActionTypes>
 
 export type Commit = union<GetFn<SubMutations> | GetFn<Mutations>>
 export type Dispatch = union<GetFn<SubActions> | GetFn<Actions>>
-type State = union<GetStateTypes<typeof vuexOptions>| GetSubStateTypes>
+export type State = union<GetStateTypes<typeof vuexOptions>| GetSubStateTypes>
 
 type GetModuleActionFn<S> = <K extends keyof S>(type: K, payload: S[K] extends (state: any, payload: infer P) => void ? P : undefined) => S[K] extends (...args: any) => infer P ? P : void
 
 export type moduleAction<S> = {
   commit: GetModuleActionFn<S>
 }
+
+type Getters<T> = {
+  [K in keyof T]: T[K] extends (state: any) => infer P ? P : void
+}
+
+
 export type UseStore = {
   commit: Commit
   state: State
   dispatch: Dispatch
+  getters: Getters<typeof vuexOptions.getters>
 }

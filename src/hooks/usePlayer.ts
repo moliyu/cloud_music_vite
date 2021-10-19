@@ -1,10 +1,11 @@
+import { useStore } from "@/store"
 import { watchEffect, computed, ref, onMounted, Ref } from "@vue/runtime-core"
 
 export enum Mode {
-  normal,
-  random,
-  loop,
-  single
+  normal = 'normal',
+  random = 'random',
+  list = 'list',
+  single = 'single'
 }
 
 type Options = {
@@ -13,17 +14,30 @@ type Options = {
 }
 
 export default (audioEl: Ref<HTMLAudioElement|null>, options?: Options) => {
+  const store = useStore()
   const duration = ref(0)
-  const currentTime = ref(0)
+  const current = computed(() => store.state.player.current)
+  const currentTime = computed({
+    get: () => store.state.player.currentTime,
+    set: (val) => {
+      store.commit('player/SET_CURRENT_TIME', val)
+    }
+  })
   const src = ref('')
   const isPlaying = ref(false)
-  const mode = ref(Mode.normal)
+  const modeList = ['normal', 'list', 'random', 'single']
+  const mode = computed({
+    get: () => store.state.player.mode,
+    set: (mode) => {
+      store.commit('player/SET_MODE', mode)
+    }
+  })
   
   onMounted(() => {
     if (audioEl.value) {
       let player = audioEl.value
       if (options?.src) src.value = options.src
-      if (options?.mode) mode.value = options.mode
+      player.currentTime = currentTime.value
       player.oncanplay = () => {
         duration.value = player.duration
         player.play()
@@ -62,6 +76,24 @@ export default (audioEl: Ref<HTMLAudioElement|null>, options?: Options) => {
       audioEl.value.pause()
     }
   }
+  const setCurrentTime = (currentTime: number) => {
+    if (audioEl.value) {
+      audioEl.value.currentTime = currentTime
+    }
+  }
+  watchEffect(() => {
+    if (current.value && audioEl.value) {
+      audioEl.value.src = `https://music.163.com/song/media/outer/url?id=${current.value?.id}.mp3`
+    }
+  })
+  const changeMode = () => {
+    const index = modeList.findIndex(item => item === mode.value)
+    if (index < modeList.length - 1) {
+      mode.value = modeList[index + 1] as Mode
+    } else {
+      mode.value = Mode.normal
+    }
+  }
   return {
     duration,
     currentTime,
@@ -71,6 +103,9 @@ export default (audioEl: Ref<HTMLAudioElement|null>, options?: Options) => {
     stop,
     pause,
     isPlaying,
-    mode
+    mode,
+    setCurrentTime,
+    changeMode,
+    current
   }
 }

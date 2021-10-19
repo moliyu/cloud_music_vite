@@ -5,6 +5,7 @@ const space = {
 }
 for (let i = 0; i < 400; i++) {
   space[i + 'px'] = i + 'px'
+  space[-i + 'px'] = -i + 'px'
 }
 module.exports = {
   purge: [
@@ -38,7 +39,8 @@ module.exports = {
       padding: space,
       margin: space,
       borderRadius: space,
-      lineHeight: space
+      lineHeight: space,
+      inset: space
     },
   },
   variants: {

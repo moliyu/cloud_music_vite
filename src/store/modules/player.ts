@@ -1,33 +1,40 @@
 import { ISong } from "@/api/types/song";
+import uselocal from "@/hooks/uselocal";
+import { Mode } from "@/hooks/usePlayer";
 import { moduleAction } from '@/hooks/useStore'
 
-interface RootState {
-  musicList: ISong[]
-  current: ISong | null
-  currentTime: number
-  duration: number
+const { player } = uselocal()
+
+const state = {
+  musicList: player.get().musicList,
+  current: player.get().current,
+  currentTime: player.get().currentTime,
+  mode: player.get().mode
 }
-const state: RootState = {
-  musicList: [],
-  current: null,
-  currentTime: 0,
-  duration: 0
-}
+
+type RootState = typeof state
 
 const mutations = {
   ADD: (state: RootState, record: ISong) => {
     if (!state.musicList.some(item => item.id === record.id)) {
       state.musicList.push(record)
+      player.set(state)
     }
   },
   SET_CURRENT: (state: RootState, record: ISong) => {
     state.current = record
+    player.set(state)
   },
   SET_CURRENT_TIME: (state: RootState, currentTime: number) => {
     state.currentTime = currentTime
+    player.set(state)
   },
   SET_DURATION: (state: RootState, duration: number) => {
-    state.duration = duration
+    // state.duration = duration
+  },
+  SET_MODE: (state: RootState, mode: Mode) => {
+    state.mode = mode
+    player.set(state)
   }
 }
 

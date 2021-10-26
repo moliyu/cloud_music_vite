@@ -1,5 +1,5 @@
 <template>
-  <div class="flex h-50px bg-gray-light w-full items-center">
+  <div class="flex h-50px bg-gray-light w-full items-center pr-30px">
     <div
       v-for="(item, i) in navList"
       :key="i"
@@ -8,12 +8,18 @@
       @click="go(item.path)"
     >{{ item.meta?.title }}</div>
     <div class="flex-auto"></div>
+    <a-input class="search" placeholder="搜索">
+      <template #prefix>
+        <SearchOutlined />
+      </template>
+    </a-input>
   </div>
 </template>
 
 <script setup lang="ts">
 import { watchEffect, ref } from "vue";
 import { RouteRecordRaw, useRoute, useRouter } from "vue-router";
+import { SearchOutlined } from '@ant-design/icons-vue'
 const route = useRoute()
 const router = useRouter()
 const navList = ref<RouteRecordRaw[]>([])
@@ -36,3 +42,9 @@ watchEffect(() => {
   })
 })
 </script>
+
+<style scoped>
+.search {
+  @apply rounded-full w-150px;
+}
+</style>

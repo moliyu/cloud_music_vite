@@ -17,6 +17,13 @@ export default (audioEl: Ref<HTMLAudioElement|null>, options?: Options) => {
   const store = useStore()
   const duration = ref(0)
   const current = computed(() => store.state.player.current)
+  const musicList = computed(() => store.state.player.musicList)
+  const volumn = computed({
+    get: () => store.state.player.volumn,
+    set: val => {
+      store.commit('player/SET_VOLUMN', val)
+    }
+  })
   const currentTime = computed({
     get: () => store.state.player.currentTime,
     set: (val) => {
@@ -38,6 +45,7 @@ export default (audioEl: Ref<HTMLAudioElement|null>, options?: Options) => {
       let player = audioEl.value
       if (options?.src) src.value = options.src
       player.currentTime = currentTime.value
+      player.volume = volumn.value
       player.oncanplay = () => {
         duration.value = player.duration
         player.play()
@@ -57,6 +65,11 @@ export default (audioEl: Ref<HTMLAudioElement|null>, options?: Options) => {
   watchEffect(() => {
     if (audioEl.value && src.value) {
       audioEl.value.src = src.value
+    }
+  })
+  watchEffect(() => {
+    if (audioEl.value) {
+      audioEl.value.volume = volumn.value
     }
   })
   const play = () => {
@@ -106,6 +119,8 @@ export default (audioEl: Ref<HTMLAudioElement|null>, options?: Options) => {
     mode,
     setCurrentTime,
     changeMode,
-    current
+    current,
+    volumn,
+    musicList
   }
 }

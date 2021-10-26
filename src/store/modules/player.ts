@@ -9,7 +9,8 @@ const state = {
   musicList: player.get().musicList,
   current: player.get().current,
   currentTime: player.get().currentTime,
-  mode: player.get().mode
+  mode: player.get().mode,
+  volumn: player.get().volumn
 }
 
 type RootState = typeof state
@@ -29,11 +30,20 @@ const mutations = {
     state.currentTime = currentTime
     player.set(state)
   },
-  SET_DURATION: (state: RootState, duration: number) => {
-    // state.duration = duration
-  },
   SET_MODE: (state: RootState, mode: Mode) => {
     state.mode = mode
+    player.set(state)
+  },
+  SET_VOLUMN: (state: RootState, volumn: number) => {
+    state.volumn = volumn
+    player.set(state)
+  },
+  REMOVE: (state: RootState, id: number) => {
+    state.musicList = state.musicList.filter(item => item.id !== id)
+    player.set(state)
+  },
+  REMOVE_ALL: (state: RootState) => {
+    state.musicList = []
     player.set(state)
   }
 }

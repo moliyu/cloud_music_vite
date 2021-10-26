@@ -1,7 +1,8 @@
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios'
 
 const config: AxiosRequestConfig = {
-  baseURL: import.meta.env.VITE_BASE_URL
+  baseURL: import.meta.env.VITE_BASE_URL,
+  withCredentials: true
 }
 
 const axiosSuccess = (res: AxiosResponse) => {

@@ -1,4 +1,10 @@
 import { IAlbum, IArtist } from "./album"
+interface IQuality {
+  br: number
+  fid: number
+  size: number
+  vd: number
+}
 
 export interface ISong {
   a: null
@@ -14,10 +20,10 @@ export interface ISong {
   dt: number
   fee: number
   ftype: number
-  h: {br: 320000, fid: 0, size: 9683113, vd: -11500}
-  id: 1314154490
-  l: {br: 128000, fid: 0, size: 3873271, vd: -7400}
-  m: {br: 192000, fid: 0, size: 5809885, vd: -8900}
+  h: IQuality
+  id: number
+  l: IQuality
+  m: IQuality
   mark: 0
   mst: 9
   mv: 0

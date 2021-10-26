@@ -4,8 +4,11 @@
 
 declare module 'vue' {
   export interface GlobalComponents {
-    AButton: typeof import('ant-design-vue/es')['Button']
+    AAvatar: typeof import('ant-design-vue/es')['Avatar']
     ACol: typeof import('ant-design-vue/es')['Col']
+    ADrawer: typeof import('ant-design-vue/es')['Drawer']
+    AInput: typeof import('ant-design-vue/es')['Input']
+    AModal: typeof import('ant-design-vue/es')['Modal']
     ARow: typeof import('ant-design-vue/es')['Row']
     ASpin: typeof import('ant-design-vue/es')['Spin']
     ATable: typeof import('ant-design-vue/es')['Table']

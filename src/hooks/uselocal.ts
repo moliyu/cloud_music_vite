@@ -6,7 +6,8 @@ export default() => {
     currentTime: 0,
     musicList: [] as ISong[],
     mode: 'normal' as Mode,
-    current: {} as ISong
+    current: {} as ISong,
+    volumn: 1
   })
   return {
     player

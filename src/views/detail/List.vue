@@ -3,22 +3,18 @@
     row-key="id"
     :dataSource="musicList"
     :columns="columns"
-    :custom-row="record => {
-      return {
-        onDblclick: () => play(record)
-      }
-    }"
+    :custom-row="customRow"
     :pagination="false"></a-table>
 </template>
 
 <script setup lang="tsx">
 import useNumber from "@/hooks/useNumber";
-import { TableState } from "ant-design-vue/es/table/interface";
 import { IArtist } from '@/api/types/album'
 import { HeartOutlined, HeartFilled, DownloadOutlined } from '@ant-design/icons-vue'
 import useTime from "@/hooks/useTime";
 import { ISong } from "@/api/types/song";
 import { useStore } from "@/store";
+import { ColumnProps } from "ant-design-vue/es/table/interface";
 
 const { formatTime } = useTime()
 
@@ -26,8 +22,7 @@ interface IMusicList {
   id: number
   name: string,
 }
-type IColumns = TableState['columns']
-const columns: IColumns = [
+const columns: ColumnProps[] = [
   {
     title: '',
     key: 'index',
@@ -85,7 +80,10 @@ const store = useStore()
 const play = (record: ISong) => {
   store.commit('player/ADD', record)
   store.commit('player/SET_CURRENT', record)
-  console.log('mmmm', store.state.player.musicList)
-  // console.log('mmm', record)
+}
+const customRow = (record: ISong) => {
+  return {
+    onDblclick: () => play(record)
+  }
 }
 </script>
